@@ -10,11 +10,17 @@ object Test : ModInitializer {
 	private val LOGGER = LoggerFactory.getLogger(MOD_ID)
 
 	override fun onInitialize() {
-		// This code runs as soon as Minecraft is in a mod-load-ready state.
-		// However, some things (like resources) may still be uninitialized.
-		// Proceed with mild caution.
+		
+		ServerPlayConnectionEvents.JOIN.register { handler, _, _ ->
+			
+			val player = handler.player
+			val playerInventory = player.inventory
 
-		LOGGER.info("Hello Fabric world!")
+			val item = ItemStack(Items.DIAMOND_SWORD, 1)
+
+			playerInventory.insertStack(item)
+		}
+
 	}
 
 	fun id(path: String): ResourceLocation
